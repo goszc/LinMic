@@ -317,7 +317,7 @@ fn build(app: &gtk::Application) {
                         let notification = gtk::gio::Notification::new("LinMic");
                         notification.set_body(Some(&format!(
                             "{} · {}",
-                            state,
+                            tr(state, state),
                             v["phone"].as_str().unwrap_or("")
                         )));
                         app.send_notification(Some("connection"), &notification);
@@ -341,7 +341,14 @@ fn build(app: &gtk::Application) {
                 } else {
                     tr("Mute microphone", "Mutar microfone")
                 });
-                metrics.set_text(&format!("{}: {:.1} ms\nRTT: {:.1} ms · Jitter: {:.1} ms\n{}: {:.2}% · Buffer: {} ms\nRMS: {:.1} dB · Peak: {:.1} dB\n{} · Opus · 48 kHz · AEAD",tr("Estimated latency","Latência estimada"),v["estimated_latency_ms"].as_f64().unwrap_or(0.),v["rtt_ms"].as_f64().unwrap_or(0.),v["jitter_ms"].as_f64().unwrap_or(0.),tr("Loss","Perda"),v["loss_percent"].as_f64().unwrap_or(0.),v["jitter_buffer_ms"],v["rms_db"].as_f64().unwrap_or(-120.),v["peak_db"].as_f64().unwrap_or(-120.),v["health"].as_str().unwrap_or("")));
+                metrics.set_text(&format!(
+                    "{}: {:.1} ms\nRTT: {:.1} ms · {}: {:.1} ms\n{}: {:.2}% · {}: {} ms\nRMS: {:.1} dB · {}: {:.1} dB\n{} · Opus · 48 kHz · AEAD",
+                    tr("Estimated latency", "Latência estimada"), v["estimated_latency_ms"].as_f64().unwrap_or(0.),
+                    v["rtt_ms"].as_f64().unwrap_or(0.), tr("Jitter", "Jitter"), v["jitter_ms"].as_f64().unwrap_or(0.),
+                    tr("Loss", "Perda"), v["loss_percent"].as_f64().unwrap_or(0.), tr("Buffer", "Buffer"), v["jitter_buffer_ms"],
+                    v["rms_db"].as_f64().unwrap_or(-120.), tr("Peak", "Pico"), v["peak_db"].as_f64().unwrap_or(-120.),
+                    tr(v["health"].as_str().unwrap_or(""), v["health"].as_str().unwrap_or(""))
+                ));
                 *updating.borrow_mut() = true;
                 gain.set_value(v["gain_db"].as_f64().unwrap_or(0.));
                 *updating.borrow_mut() = false;

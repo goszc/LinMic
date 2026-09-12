@@ -13,7 +13,7 @@ for p in sorted(m['packages'],key=lambda p:(p['name'],p['version'])):
     if not p['source']:continue
     base=pathlib.Path(p['manifest_path']).parent;dest=out/(p['name']+'-'+p['version']);files=[]
     for f in base.rglob('*'):
-        if f.is_file() and (f.name.lower().startswith(('license','licence','copying','copyright','notice','unlicense','authors')) or any(x.lower() in ('licenses','licences') for x in f.relative_to(base).parts[:-1])):
+        if f.is_file() and f.suffix not in ('.rs','.c','.h','.cpp') and (f.name.lower().startswith(('license','licence','copying','copyright','notice','unlicense','authors')) or any(x.lower() in ('licenses','licences') for x in f.relative_to(base).parts[:-1])):
             if f.stat().st_size>300000:continue
             rel=f.relative_to(base);target=dest/rel;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(f,target);files.append(f)
     rows.append(f"| {p['name']} {p['version']} | {p['license']} | [notices](docs/licenses/{dest.name}) |")
@@ -23,7 +23,7 @@ for p in sorted(m['packages'],key=lambda p:(p['name'],p['version'])):
         tree=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/git/trees/{vcs}?recursive=1']))
         for entry in tree['tree']:
             path=entry['path']
-            if entry['type']=='blob' and pathlib.PurePosixPath(path).name.lower().startswith(('license','licence','copying','unlicense')):
+            if entry['type']=='blob' and pathlib.PurePosixPath(path).suffix not in ('.rs','.c','.h','.cpp') and pathlib.PurePosixPath(path).name.lower().startswith(('license','licence','copying','unlicense')):
                 target=dest/path;target.parent.mkdir(parents=True,exist_ok=True)
                 target.write_bytes(urllib.request.urlopen(f'https://raw.githubusercontent.com/{repo}/{vcs}/{path}').read());files.append(target)
         if not files:missing.append(p['name'])

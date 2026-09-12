@@ -30,5 +30,8 @@
   "ERROR": "ERROR",
   "Excellent": "Excellent",
   "Good": "Good",
-  "Unstable": "Unstable"
+  "Unstable": "Unstable",
+  "Jitter": "Jitter",
+  "Buffer": "Buffer",
+  "Peak": "Peak"
 }

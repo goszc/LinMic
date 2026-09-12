@@ -30,5 +30,8 @@
   "ERROR": "エラー",
   "Excellent": "非常に良好",
   "Good": "良好",
-  "Unstable": "不安定"
+  "Unstable": "不安定",
+  "Jitter": "ジッター",
+  "Buffer": "バッファー",
+  "Peak": "ピーク"
 }

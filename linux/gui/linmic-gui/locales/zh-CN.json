@@ -30,5 +30,8 @@
   "ERROR": "错误",
   "Excellent": "极佳",
   "Good": "良好",
-  "Unstable": "不稳定"
+  "Unstable": "不稳定",
+  "Jitter": "抖动",
+  "Buffer": "缓冲",
+  "Peak": "峰值"
 }
