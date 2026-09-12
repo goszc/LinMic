@@ -6,7 +6,7 @@
 
 Use o microfone do Android como uma entrada de áudio do Linux: nativo, sem conta, sem nuvem, com Opus e PipeWire.
 
-**Versão 0.2.0 — Android 8+ e Linux com PipeWire.** O alvo principal é CachyOS/Arch. Desktop GTK4 opcional; o daemon continua funcionando sem janela aberta.
+**Android 0.2.1 / desktop 0.2.0 — Android 8+ e Linux com PipeWire.** O alvo principal é CachyOS/Arch. Desktop GTK4 opcional; o daemon continua funcionando sem janela aberta.
 
 ## Instalação e primeira conexão
 

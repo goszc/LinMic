@@ -1,5 +1,13 @@
 # Changelog
 
+## Android 0.2.1
+
+- Keep CPU and supported background Wi-Fi locks owned by the microphone service across screen-off and reconnect intervals. Android 14+ Wi-Fi lock restrictions still apply.
+- Retry temporary TLS/EOF transport failures while stopping on certificate, pairing and permission failures.
+- Reload the authenticated saved identity after first pairing before reconnecting.
+- Avoid closing the PC socket when an unrelated default-network callback fires; actual transport failure is detected by the existing timeout.
+- Compatible with desktop 0.2.0; same APK signing identity, versionCode 3.
+
 ## 0.2.0
 
 - Code-only desktop/Android pairing using shared SPAKE2, certificate-bound mutual confirmation and persistent identity pinning.

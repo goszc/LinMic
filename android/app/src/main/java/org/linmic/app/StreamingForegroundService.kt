@@ -5,9 +5,6 @@ import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.media.audiofx.AutomaticGainControl
 import android.media.audiofx.NoiseSuppressor
-import android.net.ConnectivityManager
-import android.net.Network
-import android.net.wifi.WifiManager
 import android.os.*
 import org.json.JSONObject
 import java.util.concurrent.atomic.AtomicBoolean
@@ -36,19 +33,13 @@ class StreamingForegroundService : Service() {
     private val revision = AtomicLong(0)
     @Volatile private var control: ControlClient? = null
     private var worker: Thread? = null
-    private var wake: PowerManager.WakeLock? = null
-    private var wifi: WifiManager.WifiLock? = null
+    private var powerLocks: StreamPowerLocks? = null
     private lateinit var settings: SettingsRepository
     private var ns: NoiseSuppressor? = null
     private var agc: AutomaticGainControl? = null
-    private val networkCallback = object : ConnectivityManager.NetworkCallback() {
-        override fun onLost(network: Network) { control?.close() }
-        override fun onAvailable(network: Network) { if (StreamModel.state is StreamState.Reconnecting) control?.close() }
-    }
     override fun onCreate() {
         super.onCreate(); settings = SettingsRepository(this)
         getSystemService(NotificationManager::class.java).createNotificationChannel(NotificationChannel("stream", getString(R.string.notification_channel), NotificationManager.IMPORTANCE_LOW))
-        getSystemService(ConnectivityManager::class.java).registerDefaultNetworkCallback(networkCallback)
     }
     override fun onBind(intent: Intent?) = null
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -67,7 +58,7 @@ class StreamingForegroundService : Service() {
         StreamModel.state = StreamState.Connecting
         val notification = notification()
         if (Build.VERSION.SDK_INT >= 30) startForeground(1, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE) else startForeground(1, notification)
-        wake = getSystemService(PowerManager::class.java).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LinMic:stream").apply { setReferenceCounted(false); acquire(12*60*60*1000L) }
+        powerLocks = StreamPowerLocks(this).also { it.refresh(settings.wifiLowLatency, StreamModel.activityVisible) }
         val code = intent?.getStringExtra("code") ?: ""
         val pin = intent?.getStringExtra("fingerprint") ?: settings.fingerprint(settings.host)
         worker = Thread({ streamLoop(pin, code) }, "linmic-control").also { it.start() }
@@ -80,7 +71,10 @@ class StreamingForegroundService : Service() {
             val client = ControlClient(settings); control = client
             try {
                 StreamModel.state = if (attempt == 0) StreamState.Connecting else StreamState.Reconnecting(attempt)
-                val ack = client.connect(settings.host, settings.port, pin, code)
+                powerLocks?.refresh(settings.wifiLowLatency, StreamModel.activityVisible)
+                // Pairing persists a pin even if the connection drops before hello_ack.
+                val currentPin = ReconnectPolicy.reconnectPin(settings.fingerprint(settings.host), pin)
+                val ack = client.connect(settings.host, settings.port, currentPin, if (currentPin.isEmpty()) code else "")
                 val start = client.request(JSONObject().put("type", "start_stream"))
                 check(start.optString("type") == "start_stream_ack") { "PC rejected stream" }
                 revision.set(start.optLong("revision"))
@@ -100,7 +94,6 @@ class StreamingForegroundService : Service() {
                 showNotification(); attempt = 0
                 var rtt = 0.0
                 var heartbeat = 0L
-                var wakeRenewed = SystemClock.elapsedRealtime()
                 var highLossSince = 0L
                 while (wanted.get()) {
                     val now = SystemClock.elapsedRealtime()
@@ -131,8 +124,7 @@ class StreamingForegroundService : Service() {
                         if (loss > 1.0) { if (highLossSince == 0L) highLossSince = now } else highLossSince = 0L
                         StreamModel.native.loss(if (highLossSince != 0L && now-highLossSince > 3000) loss.toInt().coerceIn(1,20) else 0)
                         heartbeat = now
-                        updateWifiLock()
-                        if(now-wakeRenewed>30*60*1000L){wake?.acquire(60*60*1000L);wakeRenewed=now}
+                        powerLocks?.refresh(settings.wifiLowLatency, StreamModel.activityVisible)
                     }
                     val stats = FloatArray(144); StreamModel.native.snapshot(stats); StreamModel.meter = stats
                     check(stats[6] == 0f) { "Audio device changed (${stats[6].toInt()})" }
@@ -143,27 +135,22 @@ class StreamingForegroundService : Service() {
                 attempt++
                 StreamModel.state = StreamState.Reconnecting(attempt)
                 // Authentication failures require a fresh explicit pairing action.
-                if (!settings.reconnect || e is javax.net.ssl.SSLException || e.message?.contains("pair", ignoreCase=true) == true) {
+                if (!ReconnectPolicy.canRetry(e, settings.reconnect)) {
                     StreamModel.state = StreamState.Error(e.message ?: "Connection failed")
                     wanted.set(false)
+                } else {
+                    android.util.Log.w("LinMic", "Transport interrupted (${e.javaClass.simpleName}); reconnecting")
                 }
             } finally {
                 StreamModel.native.stop(); ns?.release(); ns=null; agc?.release(); agc=null
                 client.close(); if (control === client) control = null
                 StreamModel.meter = FloatArray(144)
-                wifi?.let { if (it.isHeld) it.release() }
             }
             if (wanted.get()) {
                 try { Thread.sleep(backoff[(attempt-1).coerceIn(0,backoff.lastIndex)]) } catch (_: InterruptedException) { break }
             }
         }
         Handler(mainLooper).post { stopSelf() }
-    }
-    @Suppress("DEPRECATION") private fun updateWifiLock() {
-        if (settings.wifiLowLatency && StreamModel.activityVisible) {
-            if (wifi == null) wifi = (applicationContext.getSystemService(WIFI_SERVICE) as WifiManager).createWifiLock(if (Build.VERSION.SDK_INT >= 29) WifiManager.WIFI_MODE_FULL_LOW_LATENCY else WifiManager.WIFI_MODE_FULL_HIGH_PERF, "LinMic:wifi").apply { setReferenceCounted(false) }
-            wifi?.let { if (!it.isHeld) it.acquire() }
-        } else wifi?.let { if (it.isHeld) it.release() }
     }
     private fun notification(): Notification {
         val open = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
@@ -176,8 +163,7 @@ class StreamingForegroundService : Service() {
     private fun showNotification() { getSystemService(NotificationManager::class.java).notify(1, notification()) }
     override fun onDestroy() {
         wanted.set(false); control?.close(); worker?.interrupt(); StreamModel.native.stop()
-        runCatching { getSystemService(ConnectivityManager::class.java).unregisterNetworkCallback(networkCallback) }
-        wake?.let { if (it.isHeld) it.release() }; wifi?.let { if (it.isHeld) it.release() }
+        powerLocks?.close()
         if (StreamModel.state !is StreamState.Error) StreamModel.state = StreamState.Idle
         stopForeground(STOP_FOREGROUND_REMOVE)
         super.onDestroy()

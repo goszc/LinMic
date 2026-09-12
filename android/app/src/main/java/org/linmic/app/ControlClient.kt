@@ -54,20 +54,20 @@ class ControlClient(private val settings: SettingsRepository) : AutoCloseable {
             .put("profile", settings.profile).put("token", if(fingerprint.isNotEmpty()) settings.token(host) else ""))
         var response = read()
         if (response.optString("type") == "pair_challenge") {
-            check(response.optString("method") == "spake2-v1") { "Pairing: desktop app must be updated" }
+            if (response.optString("method") != "spake2-v1") throw PairingFailure("Pairing: desktop app must be updated")
             val exchange = NativeAudio.pair(code, decodeHex(response.getString("message")), presented)
-                ?: throw IllegalStateException("Pairing: invalid challenge")
+                ?: throw PairingFailure("Pairing: invalid challenge")
             send(JSONObject().put("type", "pair_submit").put("method", "spake2-v1")
                 .put("message", encodeHex(exchange.copyOfRange(0,33))).put("proof", encodeHex(exchange.copyOfRange(33,65))))
             val paired = read()
-            check(paired.optString("type") == "pair_success") { "Pairing: check the code displayed on desktop" }
-            check(MessageDigest.isEqual(exchange.copyOfRange(65,97), decodeHex(paired.getString("proof")))) { "Pairing: PC authentication failed" }
+            if (paired.optString("type") != "pair_success") throw PairingFailure("Pairing: check the code displayed on desktop")
+            if (!MessageDigest.isEqual(exchange.copyOfRange(65,97), decodeHex(paired.getString("proof")))) throw PairingFailure("Pairing: PC authentication failed")
             exchange.fill(0)
             settings.saveToken(host, paired.getString("device_token"))
             settings.saveFingerprint(host, encodeHex(presented))
             response = read()
         }
-        check(response.optString("type") == "hello_ack") { if(response.optString("type")=="pair_error") "Pairing: generate a code in the desktop app" else "PC rejected the connection" }
+        if (response.optString("type") != "hello_ack") throw PairingFailure(if(response.optString("type")=="pair_error") "Pairing: generate a code in the desktop app" else "PC rejected the connection")
         response.put("_peer_host",tls.inetAddress.hostAddress)
         return response
     }
