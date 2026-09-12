@@ -1,0 +1,6 @@
+* text=auto
+# Preserve upstream legal texts and the supplied Markdown specification verbatim.
+docs/licenses/** -whitespace
+android/app/src/main/res/raw/licenses.txt -whitespace
+LinMic_SPEC_CachyOS_Android.md -whitespace
+*.jar binary

@@ -1,0 +1,30 @@
+# Build against a local source archive produced from a release checkout.
+pkgbase=linmic
+pkgname=(linmic linmic-gui)
+pkgver=0.2.0
+pkgrel=1
+pkgdesc='Secure Android microphone for PipeWire Linux desktops'
+arch=('x86_64' 'aarch64')
+license=('GPL-3.0-or-later')
+makedepends=('rust' 'cargo' 'pkgconf' 'clang' 'pipewire' 'opus' 'gtk4')
+source=("linmic-$pkgver.tar.gz")
+sha256sums=('@SOURCE_SHA256@')
+prepare() { cd "$srcdir/linmic-$pkgver"; cargo fetch --locked; }
+build() { cd "$srcdir/linmic-$pkgver"; cargo build --frozen --release --workspace; }
+check() { cd "$srcdir/linmic-$pkgver"; cargo test --frozen --workspace; }
+package_linmic() {
+  depends=('pipewire' 'opus' 'gcc-libs' 'glibc')
+  cd "$srcdir/linmic-$pkgver"
+  install -Dm755 target/release/linmic "$pkgdir/usr/bin/linmic"
+  install -Dm755 target/release/linmicd "$pkgdir/usr/bin/linmicd"
+  install -Dm644 linux/systemd/linmic.service "$pkgdir/usr/lib/systemd/user/linmic.service"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/linmic/LICENSE"
+}
+package_linmic-gui() {
+  depends=('linmic' 'gtk4')
+  cd "$srcdir/linmic-$pkgver"
+  install -Dm755 target/release/linmic-gui "$pkgdir/usr/bin/linmic-gui"
+  install -Dm755 target/release/linmic-hotkeys "$pkgdir/usr/bin/linmic-hotkeys"
+  install -Dm644 linux/linmic.desktop "$pkgdir/usr/share/applications/org.linmic.LinMic.desktop"
+  install -Dm644 linux/linmic.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/org.linmic.LinMic.svg"
+}

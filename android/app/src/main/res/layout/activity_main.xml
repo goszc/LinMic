@@ -1,0 +1,26 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/root" android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true">
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+        <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="@string/app_name" android:textSize="32sp" android:textStyle="bold"/>
+        <Button android:id="@+id/settings" android:layout_width="wrap_content" android:layout_height="48dp" android:text="@string/settings"/>
+    </LinearLayout>
+    <TextView android:id="@+id/status" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="@string/idle" android:textSize="20sp" android:accessibilityLiveRegion="polite"/>
+    <org.linmic.app.WaveformView android:id="@+id/waveform" android:layout_width="match_parent" android:layout_height="112dp" android:layout_marginTop="12dp" android:contentDescription="@string/waveform"/>
+    <Button android:id="@+id/mute" android:layout_width="match_parent" android:layout_height="64dp" android:text="@string/mute" android:textSize="18sp"/>
+    <TextView android:id="@+id/stats" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:fontFamily="monospace" android:textSize="14sp" android:lineSpacingExtra="4dp"/>
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/latency_help" android:textSize="12sp"/>
+    <TextView android:id="@+id/diagnostics" android:layout_width="match_parent" android:layout_height="wrap_content" android:fontFamily="monospace" android:textSize="12sp" android:visibility="gone"/>
+    <TextView android:id="@+id/gain_label" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp"/>
+    <SeekBar android:id="@+id/gain" android:layout_width="match_parent" android:layout_height="48dp" android:max="84" android:progress="60" android:contentDescription="@string/gain"/>
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/profile" android:labelFor="@id/profile"/>
+    <Spinner android:id="@+id/profile" android:layout_width="match_parent" android:layout_height="48dp"/>
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/mic" android:labelFor="@id/microphone"/>
+    <Spinner android:id="@+id/microphone" android:layout_width="match_parent" android:layout_height="48dp"/>
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/discovery" android:labelFor="@id/computers"/>
+    <Spinner android:id="@+id/computers" android:layout_width="match_parent" android:layout_height="48dp"/>
+    <EditText android:id="@+id/host" android:layout_width="match_parent" android:layout_height="56dp" android:hint="@string/host" android:inputType="textUri" android:singleLine="true" android:importantForAutofill="no"/>
+    <EditText android:id="@+id/port" android:layout_width="match_parent" android:layout_height="56dp" android:hint="@string/port" android:inputType="number" android:singleLine="true" android:importantForAutofill="no"/>
+    <Button android:id="@+id/connect" android:layout_width="match_parent" android:layout_height="56dp" android:text="@string/connect" android:layout_marginTop="12dp"/>
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="@string/intro"/>
+</LinearLayout>
+</ScrollView>

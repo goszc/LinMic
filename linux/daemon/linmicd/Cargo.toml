@@ -1,0 +1,19 @@
+[package]
+name = "linmicd"
+version.workspace = true
+license.workspace = true
+edition.workspace = true
+[dependencies]
+linmic-pairing = { path = "../../../crates/linmic-pairing" }
+anyhow.workspace = true
+serde_json.workspace = true
+clap.workspace = true
+linmic-common = { path = "../../../crates/linmic-common" }
+linmic-protocol = { path = "../../../crates/linmic-protocol" }
+linmic-audio = { path = "../../../crates/linmic-audio" }
+linmic-network = { path = "../../../crates/linmic-network" }
+linmic-pipewire = { path = "../../../crates/linmic-pipewire" }
+linmic-ipc = { path = "../../../crates/linmic-ipc" }
+ctrlc = "3"
+rand = "0.8"
+hex = "0.4"

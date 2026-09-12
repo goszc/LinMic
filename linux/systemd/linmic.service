@@ -1,0 +1,16 @@
+[Unit]
+Description=LinMic secure Android microphone
+After=pipewire.service
+Wants=pipewire.service
+
+[Service]
+ExecStart=/usr/bin/linmicd
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+UMask=0077
+RestrictSUIDSGID=true
+LockPersonality=true
+
+[Install]
+WantedBy=default.target

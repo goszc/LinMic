@@ -1,0 +1,10 @@
+[package]
+name = "linmic-ipc"
+version.workspace = true
+license.workspace = true
+edition.workspace = true
+[dependencies]
+anyhow.workspace = true
+serde_json.workspace = true
+linmic-common = { path = "../linmic-common" }
+linmic-protocol = { path = "../linmic-protocol" }

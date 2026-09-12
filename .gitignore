@@ -1,0 +1,16 @@
+/target/
+/android/.gradle/
+/android/.kotlin/
+/android/local.properties
+/android/**/build/
+/android/**/.cxx/
+*.jks
+*.keystore
+/artifacts/
+/.tools/
+/android/native/rust/
+*.pem
+*.der
+.env
+.env.*
+!*.example

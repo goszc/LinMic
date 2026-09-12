@@ -1,0 +1,17 @@
+[package]
+name = "linmic-network"
+version.workspace = true
+license.workspace = true
+edition.workspace = true
+[dependencies]
+linmic-pairing = { path = "../linmic-pairing" }
+anyhow.workspace = true
+serde_json.workspace = true
+rustls = { version = "0.23", default-features = false, features = ["std", "ring", "tls12"] }
+rcgen = "0.13"
+sha2 = "0.10"
+rand = "0.8"
+hex = "0.4"
+mdns-sd = "0.13"
+linmic-common = { path = "../linmic-common" }
+linmic-protocol = { path = "../linmic-protocol" }

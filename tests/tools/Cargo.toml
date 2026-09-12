@@ -1,0 +1,22 @@
+[package]
+name = "linmic-tools"
+version.workspace = true
+license.workspace = true
+edition.workspace = true
+[dependencies]
+linmic-pairing = { path = "../../crates/linmic-pairing" }
+linmic-ipc = { path = "../../crates/linmic-ipc" }
+anyhow.workspace = true
+serde_json.workspace = true
+clap.workspace = true
+linmic-common = { path = "../../crates/linmic-common" }
+linmic-protocol = { path = "../../crates/linmic-protocol" }
+linmic-network = { path = "../../crates/linmic-network" }
+linmic-audio = { path = "../../crates/linmic-audio" }
+
+[[bin]]
+name = "linmic-test-sender"
+path = "src/sender.rs"
+[[bin]]
+name = "linmic-test-receiver"
+path = "src/receiver.rs"

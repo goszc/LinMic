@@ -1,0 +1,9 @@
+[package]
+name = "linmic-audio"
+version.workspace = true
+license.workspace = true
+edition.workspace = true
+[dependencies]
+anyhow.workspace = true
+rtrb = "0.3"
+linmic-protocol = { path = "../linmic-protocol" }

@@ -1,0 +1,13 @@
+[package]
+name = "linmic-pairing"
+version.workspace = true
+license.workspace = true
+edition.workspace = true
+[lib]
+crate-type = ["rlib", "staticlib"]
+[dependencies]
+spake2 = "0.4"
+sha2 = "0.10"
+hmac = "0.12"
+zeroize = "1"
+curve25519-dalek = "4"

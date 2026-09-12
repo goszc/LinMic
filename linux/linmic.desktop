@@ -1,0 +1,22 @@
+[Desktop Entry]
+Type=Application
+Name=LinMic
+GenericName=Android microphone
+GenericName[pt_BR]=Microfone Android
+Comment=Use your Android microphone on Linux
+Comment[pt_BR]=Use o microfone do Android no Linux
+Exec=linmic-gui
+Icon=org.linmic.LinMic
+Terminal=false
+Categories=AudioVideo;Audio;GTK;
+Keywords=microphone;android;pipewire;audio;
+StartupNotify=true
+DBusActivatable=false
+GenericName[es]=Micrófono Android
+GenericName[ru]=Микрофон Android
+GenericName[zh_CN]=Android 麦克风
+GenericName[ja]=Android マイク
+Comment[es]=Usa el micrófono de Android en Linux
+Comment[ru]=Используйте микрофон Android в Linux
+Comment[zh_CN]=在 Linux 上使用 Android 麦克风
+Comment[ja]=Linux で Android のマイクを使用

@@ -1,0 +1,12 @@
+[package]
+name = "linmic-pipewire"
+version.workspace = true
+license.workspace = true
+edition.workspace = true
+[dependencies]
+anyhow.workspace = true
+linmic-audio = { path = "../linmic-audio" }
+linmic-common = { path = "../linmic-common" }
+[build-dependencies]
+cc = "1"
+pkg-config = "0.3"

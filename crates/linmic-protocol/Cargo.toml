@@ -1,0 +1,10 @@
+[package]
+name = "linmic-protocol"
+version.workspace = true
+license.workspace = true
+edition.workspace = true
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+anyhow.workspace = true
+chacha20poly1305 = "0.10"

@@ -1,0 +1,14 @@
+[package]
+name = "linmic-gui"
+version.workspace = true
+license.workspace = true
+edition.workspace = true
+[dependencies]
+anyhow.workspace = true
+serde_json.workspace = true
+clap.workspace = true
+linmic-common = { path = "../../../crates/linmic-common" }
+linmic-ipc = { path = "../../../crates/linmic-ipc" }
+gtk = { package = "gtk4", version = "0.10" }
+ksni = { version = "0.3.6", default-features = false, features = ["async-io", "blocking"] }
+zbus = "5"
