@@ -12,3 +12,4 @@ linmic-ipc = { path = "../../../crates/linmic-ipc" }
 gtk = { package = "gtk4", version = "0.10" }
 ksni = { version = "0.3.6", default-features = false, features = ["async-io", "blocking"] }
 zbus = "5"
+libc = "0.2"

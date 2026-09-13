@@ -1,7 +1,7 @@
 # Build against a local source archive produced from a release checkout.
 pkgbase=linmic
 pkgname=(linmic linmic-gui)
-pkgver=0.2.0
+pkgver=0.3.0
 pkgrel=1
 pkgdesc='Secure Android microphone for PipeWire Linux desktops'
 arch=('x86_64' 'aarch64')
@@ -21,7 +21,7 @@ package_linmic() {
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/linmic/LICENSE"
 }
 package_linmic-gui() {
-  depends=('linmic' 'gtk4')
+  depends=('linmic' 'gtk4' 'pipewire' 'wireplumber')
   cd "$srcdir/linmic-$pkgver"
   install -Dm755 target/release/linmic-gui "$pkgdir/usr/bin/linmic-gui"
   install -Dm755 target/release/linmic-hotkeys "$pkgdir/usr/bin/linmic-hotkeys"

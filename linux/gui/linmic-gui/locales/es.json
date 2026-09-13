@@ -33,5 +33,14 @@
   "Unstable": "Inestable",
   "Jitter": "Jitter",
   "Buffer": "Búfer",
-  "Peak": "Pico"
+  "Peak": "Pico",
+  "Your voice. Your computer.": "Tu voz. Tu ordenador.",
+  "Microphone": "Micrófono",
+  "Connection": "Conexión",
+  "Diagnostics": "Diagnóstico",
+  "Hear my microphone": "Escuchar mi micrófono",
+  "Use headphones to avoid feedback. Plays through the default PC output. Off when disconnected or the interface exits.": "Usa auriculares para evitar acoples. Reproduce en la salida predeterminada del PC. Se desactiva al desconectar o cerrar la interfaz.",
+  "Monitor volume (%)": "Volumen de escucha (%)",
+  "Monitor unavailable": "Escucha no disponible",
+  "Local monitoring active": "Escucha local activa"
 }

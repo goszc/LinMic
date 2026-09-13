@@ -15,3 +15,7 @@ Release lint and unit tests cover transient TLS/EOF retry, nested certificate re
 ## Android 0.3.0
 
 20 Android unit tests and release lint passed. New tests distinguish quiet rooms and deliberate/system mute from frozen capture, stalled sending, stopped PC receipt and all-zero driver data; recovery limits persist across reconnects. On an Android 15 emulator paired through real SPAKE2/TLS with an isolated Linux daemon, screen-off transmission continued (795 packets over 8 seconds), the Android microphone privacy switch appeared as system silencing, and suspending/resuming audioserver triggered CAPTURE_STALLED → automatic reopen → STREAMING without user action. The emulator does not reproduce Samsung firmware or prove physical microphone quality. The affected handset still needs a screen-off check; a private diagnostic history is available if the fault recurs.
+
+Desktop 0.3.0: live PipeWire integration verified that local monitoring links the LinMic source only after setting its independent volume; a zero-volume test confirmed the output control and child-process cleanup. Monitor unit coverage also checks explicit stop reaps the owned process.
+
+Combined 0.3.0 validation: 21 workspace tests passed (one live PipeWire test is ignored by default and passed separately), 20 Android tests passed, release lint and desktop Clippy with warnings denied passed. APK and native desktop release builds completed.

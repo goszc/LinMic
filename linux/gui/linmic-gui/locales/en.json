@@ -33,5 +33,14 @@
   "Unstable": "Unstable",
   "Jitter": "Jitter",
   "Buffer": "Buffer",
-  "Peak": "Peak"
+  "Peak": "Peak",
+  "Your voice. Your computer.": "Your voice. Your computer.",
+  "Microphone": "Microphone",
+  "Connection": "Connection",
+  "Diagnostics": "Diagnostics",
+  "Hear my microphone": "Hear my microphone",
+  "Use headphones to avoid feedback. Plays through the default PC output. Off when disconnected or the interface exits.": "Use headphones to avoid feedback. Plays through the default PC output. Off when disconnected or the interface exits.",
+  "Monitor volume (%)": "Monitor volume (%)",
+  "Monitor unavailable": "Monitor unavailable",
+  "Local monitoring active": "Local monitoring active"
 }

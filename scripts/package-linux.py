@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import pathlib,shutil,subprocess,tarfile
 root=pathlib.Path(__file__).resolve().parents[1]
-version='0.2.0';dest=root/'artifacts';folder=dest/f'linmic-{version}-linux-x86_64';folder.mkdir(parents=True,exist_ok=True)
+version='0.3.0';dest=root/'artifacts';folder=dest/f'linmic-{version}-linux-x86_64';folder.mkdir(parents=True,exist_ok=True)
 (folder/'bin').mkdir(exist_ok=True)
 for name in ['linmicd','linmic','linmic-gui','linmic-hotkeys']:
     shutil.copy2(root/'target/release'/name,folder/'bin'/name)

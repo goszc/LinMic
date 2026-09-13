@@ -1,4 +1,5 @@
 mod i18n;
+mod monitor;
 mod tray;
 use gtk::{glib, prelude::*};
 use ksni::blocking::TrayMethods;
@@ -22,9 +23,16 @@ fn build(app: &gtk::Application) {
     let window = gtk::ApplicationWindow::builder()
         .application(app)
         .title("LinMic")
-        .default_width(430)
-        .default_height(620)
+        .default_width(570)
+        .default_height(790)
         .build();
+    let css = gtk::CssProvider::new();
+    css.load_from_data("window { background: #101e1a; color: #e8f6ef; } .title-1 { font-size: 34px; font-weight: 800; } .card { background: #1a3027; border: 1px solid #345144; border-radius: 20px; padding: 20px; } button { background: #29463a; color: #e8f6ef; border-radius: 12px; padding: 12px; } button.suggested-action { background: #087c61; color: white; } .hero { font-size: 22px; font-weight: 700; } .dim-label { color: #aac4b7; opacity: 1; } scale trough highlight { background: #77dfb5; } stackswitcher button:checked { background: #27523f; color: white; }");
+    gtk::style_context_add_provider_for_display(
+        &gtk::gdk::Display::default().expect("display"),
+        &css,
+        gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
+    );
     let content = gtk::Box::new(gtk::Orientation::Vertical, 14);
     content.set_margin_top(24);
     content.set_margin_bottom(24);
@@ -34,10 +42,46 @@ fn build(app: &gtk::Application) {
     title.add_css_class("title-1");
     title.set_xalign(0.);
     content.append(&title);
+    let tagline = gtk::Label::new(Some(&tr(
+        "Your voice. Your computer.",
+        "Sua voz. Seu computador.",
+    )));
+    tagline.set_xalign(0.);
+    tagline.add_css_class("dim-label");
+    content.append(&tagline);
+    let stack = gtk::Stack::new();
+    stack.set_transition_type(gtk::StackTransitionType::Crossfade);
+    let tabs = gtk::StackSwitcher::new();
+    tabs.set_stack(Some(&stack));
+    tabs.set_halign(gtk::Align::Fill);
+    content.append(&tabs);
+    let mic_page = gtk::Box::new(gtk::Orientation::Vertical, 16);
+    let connection_page = gtk::Box::new(gtk::Orientation::Vertical, 16);
+    let health_page = gtk::Box::new(gtk::Orientation::Vertical, 16);
+    stack.add_titled(&mic_page, Some("mic"), &tr("Microphone", "Microfone"));
+    stack.add_titled(
+        &connection_page,
+        Some("connection"),
+        &tr("Connection", "Conexão"),
+    );
+    stack.add_titled(
+        &health_page,
+        Some("health"),
+        &tr("Diagnostics", "Diagnóstico"),
+    );
+    let scroll = gtk::ScrolledWindow::new();
+    scroll.set_vexpand(true);
+    scroll.set_child(Some(&stack));
+    content.append(&scroll);
+    stack.set_vhomogeneous(false);
+    let hero = gtk::Box::new(gtk::Orientation::Vertical, 14);
+    hero.add_css_class("card");
+    mic_page.append(&hero);
     let status = gtk::Label::new(Some(&tr("Connecting to daemon…", "Conectando ao daemon…")));
     status.set_xalign(0.);
     status.set_wrap(true);
-    content.append(&status);
+    status.add_css_class("hero");
+    hero.append(&status);
     let waveform = gtk::DrawingArea::new();
     waveform.set_content_height(100);
     let data = Rc::new(RefCell::new(vec![0.; 32]));
@@ -54,36 +98,77 @@ fn build(app: &gtk::Application) {
         }
         let _ = cr.stroke();
     });
-    content.append(&waveform);
+    hero.append(&waveform);
+    let level = gtk::Label::new(None);
+    level.add_css_class("hero");
+    hero.append(&level);
+    let quick_metrics = gtk::Label::new(None);
+    quick_metrics.add_css_class("dim-label");
+    hero.append(&quick_metrics);
     let mute = gtk::Button::with_label(&tr("Mute microphone", "Mutar microfone"));
     mute.add_css_class("suggested-action");
     mute.set_height_request(48);
-    content.append(&mute);
+    hero.append(&mute);
     let metrics = gtk::Label::new(None);
     metrics.set_xalign(0.);
     metrics.set_wrap(true);
     metrics.set_selectable(true);
-    content.append(&metrics);
+    health_page.append(&metrics);
     let gain_label = gtk::Label::new(Some(&tr("Receive gain (dB)", "Ganho de recepção (dB)")));
     gain_label.set_xalign(0.);
-    content.append(&gain_label);
+    let gain_card = gtk::Box::new(gtk::Orientation::Vertical, 10);
+    gain_card.add_css_class("card");
+    mic_page.append(&gain_card);
+    gain_card.append(&gain_label);
     let gain = gtk::Scale::with_range(gtk::Orientation::Horizontal, -60., 24., 1.);
     gain.set_value(0.);
     gain.set_draw_value(true);
-    content.append(&gain);
+    gain_card.append(&gain);
+    let presets = gtk::Box::new(gtk::Orientation::Horizontal, 8);
+    for (label, value) in [("0 dB", 0.), ("+6 dB", 6.), ("+12 dB", 12.)] {
+        let button = gtk::Button::with_label(label);
+        button.set_hexpand(true);
+        let slider = gain.clone();
+        button.connect_clicked(move |_| slider.set_value(value));
+        presets.append(&button);
+    }
+    gain_card.append(&presets);
+    let monitor_card = gtk::Box::new(gtk::Orientation::Vertical, 10);
+    monitor_card.add_css_class("card");
+    mic_page.append(&monitor_card);
+    let listen = gtk::CheckButton::with_label(&tr("Hear my microphone", "Ouvir meu microfone"));
+    monitor_card.append(&listen);
+    let monitor_note = gtk::Label::new(Some(&tr("Use headphones to avoid feedback. Plays through the default PC output. Off when disconnected or the interface exits.", "Use fones para evitar microfonia. Reproduz na saída padrão do PC. Desliga ao desconectar ou encerrar a interface.")));
+    monitor_note.set_wrap(true);
+    monitor_note.set_xalign(0.);
+    monitor_note.add_css_class("dim-label");
+    monitor_card.append(&monitor_note);
+    let monitor_volume_label =
+        gtk::Label::new(Some(&tr("Monitor volume (%)", "Volume do retorno (%)")));
+    monitor_volume_label.set_xalign(0.);
+    monitor_card.append(&monitor_volume_label);
+    let monitor_volume = gtk::Scale::with_range(gtk::Orientation::Horizontal, 0., 100., 1.);
+    monitor_volume.set_value(25.);
+    monitor_volume.set_draw_value(true);
+    monitor_volume.set_sensitive(false);
+    monitor_card.append(&monitor_volume);
+    let monitor_status = gtk::Label::new(None);
+    monitor_status.set_wrap(true);
+    monitor_status.set_xalign(0.);
+    monitor_card.append(&monitor_status);
     let pair = gtk::Button::with_label(&tr("Pair a phone", "Parear telefone"));
-    content.append(&pair);
+    connection_page.append(&pair);
     let devices = gtk::Button::with_label(&tr("Paired devices", "Dispositivos pareados"));
-    content.append(&devices);
+    connection_page.append(&devices);
     let disconnect = gtk::Button::with_label(&tr("Disconnect", "Desconectar"));
     content.append(&disconnect);
     let note=gtk::Label::new(Some(&tr("Closing this window keeps the microphone running. Configure global shortcuts with linmic toggle-mute.","Fechar esta janela mantém o microfone ativo. Configure atalhos globais com linmic toggle-mute.")));
     note.set_wrap(true);
     note.add_css_class("dim-label");
-    content.append(&note);
+    health_page.append(&note);
     let language_label = gtk::Label::new(Some(&tr("Language", "Idioma")));
     language_label.set_xalign(0.);
-    content.append(&language_label);
+    health_page.append(&language_label);
     let languages = gtk::DropDown::from_strings(&[
         "Português (Brasil)",
         "English",
@@ -123,10 +208,8 @@ fn build(app: &gtk::Application) {
             }
         }
     });
-    content.append(&languages);
-    let scroll = gtk::ScrolledWindow::new();
-    scroll.set_child(Some(&content));
-    window.set_child(Some(&scroll));
+    health_page.append(&languages);
+    window.set_child(Some(&content));
     let (tx, rx) = mpsc::channel::<Value>();
     let (window_tx, window_rx) = mpsc::channel();
     let tray = tray::Tray {
@@ -145,27 +228,88 @@ fn build(app: &gtk::Application) {
     let application = app.downgrade();
     let mut last_state = String::new();
     let (events_tx, events_rx) = mpsc::sync_channel::<(String, Value)>(8);
-    std::thread::spawn(move || loop {
-        match rx.recv_timeout(Duration::from_millis(100)) {
-            Ok(v) => {
-                let kind = v["type"].as_str().unwrap_or("").to_owned();
-                let response =
-                    linmic_ipc::request(v).unwrap_or_else(|e| json!({"error":e.to_string()}));
-                if events_tx.send((kind, response)).is_err() {
-                    break;
+    std::thread::spawn(move || {
+        let mut monitor = monitor::Monitor::default();
+        monitor.volume = 0.25;
+        let mut source = String::new();
+        let mut streaming = false;
+        let mut volume_dirty = false;
+        let mut monitor_error = String::new();
+        loop {
+            match rx.recv_timeout(Duration::from_millis(100)) {
+                Ok(v) => {
+                    let kind = v["type"].as_str().unwrap_or("").to_owned();
+                    let response = if kind == "monitor" {
+                        monitor_error.clear();
+                        let result = if v["enabled"].as_bool() == Some(true) && streaming {
+                            monitor.start(&source)
+                        } else {
+                            monitor.stop();
+                            Ok(())
+                        };
+                        volume_dirty = true;
+                        match result {
+                            Ok(()) => json!({"monitor_active":monitor.running()}),
+                            Err(e) => {
+                                monitor_error = e.to_string();
+                                json!({"monitor_error":monitor_error,"monitor_active":false})
+                            }
+                        }
+                    } else if kind == "monitor-volume" {
+                        monitor.volume = v["value"].as_f64().unwrap_or(0.25).clamp(0., 1.);
+                        volume_dirty = true;
+                        json!({"monitor_active":monitor.running()})
+                    } else {
+                        linmic_ipc::request(v).unwrap_or_else(|e| json!({"error":e.to_string()}))
+                    };
+                    if events_tx.send((kind, response)).is_err() {
+                        break;
+                    }
                 }
-            }
-            Err(mpsc::RecvTimeoutError::Timeout) => {
-                let response = linmic_ipc::request(json!({"type":"status"}))
-                    .unwrap_or_else(|e| json!({"error":e.to_string()}));
-                if let Err(mpsc::TrySendError::Disconnected(_)) =
-                    events_tx.try_send(("status".into(), response))
-                {
-                    break;
+                Err(mpsc::RecvTimeoutError::Timeout) => {
+                    let mut response = linmic_ipc::request(json!({"type":"status"}))
+                        .unwrap_or_else(|e| json!({"error":e.to_string()}));
+                    source = response["node_name"].as_str().unwrap_or("").to_owned();
+                    streaming = response["state"] == "STREAMING";
+                    if !streaming {
+                        monitor.stop();
+                    }
+                    if monitor.running() && volume_dirty {
+                        match monitor.apply_volume() {
+                            Ok(()) => {
+                                volume_dirty = !monitor.volume_ready();
+                            }
+                            Err(e) => {
+                                monitor.stop();
+                                monitor_error = e.to_string();
+                            }
+                        }
+                    }
+                    response["monitor_active"] = json!(monitor.running());
+                    if !monitor_error.is_empty() {
+                        response["monitor_error"] = json!(monitor_error);
+                    }
+                    if let Err(mpsc::TrySendError::Disconnected(_)) =
+                        events_tx.try_send(("status".into(), response))
+                    {
+                        break;
+                    }
                 }
+                Err(_) => break,
             }
-            Err(_) => break,
         }
+    });
+    let monitor_updating = Rc::new(RefCell::new(false));
+    let mu = monitor_updating.clone();
+    let t = tx.clone();
+    listen.connect_toggled(move |button| {
+        if !*mu.borrow() {
+            let _ = t.send(json!({"type":"monitor","enabled":button.is_active()}));
+        }
+    });
+    let t = tx.clone();
+    monitor_volume.connect_value_changed(move |slider| {
+        let _ = t.send(json!({"type":"monitor-volume","value":slider.value()/100.}));
     });
     let t = tx.clone();
     mute.connect_clicked(move |_| {
@@ -201,6 +345,22 @@ fn build(app: &gtk::Application) {
             }
         }
         while let Ok((kind, v)) = events_rx.try_recv() {
+            if let Some(active) = v["monitor_active"].as_bool() {
+                *monitor_updating.borrow_mut() = true;
+                listen.set_active(active);
+                *monitor_updating.borrow_mut() = false;
+                monitor_volume.set_sensitive(active);
+            }
+            if let Some(error) = v["monitor_error"].as_str() {
+                monitor_status.set_text(&format!(
+                    "{}: {error}",
+                    tr("Monitor unavailable", "Retorno indisponível")
+                ));
+            } else if v["monitor_active"].as_bool() == Some(true) {
+                monitor_status.set_text(&tr("Local monitoring active", "Retorno local ativo"));
+            } else {
+                monitor_status.set_text("");
+            }
             if let Some(error) = v.get("error") {
                 status.set_text(&format!(
                     "{}: {error}",
@@ -309,6 +469,24 @@ fn build(app: &gtk::Application) {
                 dialog.present();
             } else if kind == "status" {
                 let state = v["state"].as_str().unwrap_or("");
+                level.set_text(&if state == "STREAMING" {
+                    format!("{:.0} dB", v["peak_db"].as_f64().unwrap_or(-120.))
+                } else {
+                    "— dB".into()
+                });
+                quick_metrics.set_text(&if state == "STREAMING" {
+                    format!(
+                        "{:.0} ms · {} {:.1}%",
+                        v["estimated_latency_ms"].as_f64().unwrap_or(0.),
+                        tr("Loss", "Perda"),
+                        v["loss_percent"].as_f64().unwrap_or(0.)
+                    )
+                } else {
+                    tr("Pair a phone", "Parear telefone")
+                });
+                listen.set_sensitive(state == "STREAMING");
+                mute.set_sensitive(state == "STREAMING");
+                disconnect.set_sensitive(state != "IDLE");
                 if !last_state.is_empty()
                     && state != last_state
                     && matches!(state, "IDLE" | "STREAMING")

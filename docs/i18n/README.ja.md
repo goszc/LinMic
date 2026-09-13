@@ -2,7 +2,7 @@
 
 [Português (Brasil)](../../README.md) · [English](README.en.md) · [Español](README.es.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md) · **日本語**
 
-Android スマートフォンを Linux のマイクとして使用できます。ネイティブアプリ、アカウント不要、クラウド不要。**0.3.0 (Android) / 0.2.0 (Linux)・Android 8 以降・PipeWire を使用する Linux**。主な対象は CachyOS/Arch です。
+Android スマートフォンを Linux のマイクとして使用できます。ネイティブアプリ、アカウント不要、クラウド不要。**0.3.0 (Android) / 0.3.0 (Linux)・Android 8 以降・PipeWire を使用する Linux**。主な対象は CachyOS/Arch です。
 
 ## インストールと接続
 
@@ -37,3 +37,5 @@ Android には JDK 17、SDK 36、NDK 28.2.13676358、CMake 3.22.1、Python、お
 [セキュリティ方針](../../SECURITY.md)・[設計](../security.md)・[検証](../validation.md)・[貢献](../../CONTRIBUTING.md)。機能テストは独立したセキュリティ監査ではなく、検証したデバイスとディストリビューションには限りがあります。
 
 **GPL-3.0-or-later**。[ライセンス](../../LICENSE)と[第三者の通知](../../THIRD_PARTY_NOTICES.md)を参照してください。バイナリの配布時には、対応するソースコードと通知も提供してください。
+
+デスクトップ版 0.3.0 はマイク・接続・診断タブ、ゲインプリセット、独立した音量の**自分のマイクを聴く**機能を追加します。ヘッドホンを使用してください。モニターはPCの既定の出力を使用し、初期状態はオフで、切断時またはUI終了時に停止します。PipeWire（`pw-loopback`、`pw-dump`、`pw-link`）とWirePlumber（`wpctl`）が必要です。

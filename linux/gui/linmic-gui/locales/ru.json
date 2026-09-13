@@ -33,5 +33,14 @@
   "Unstable": "Нестабильно",
   "Jitter": "Джиттер",
   "Buffer": "Буфер",
-  "Peak": "Пик"
+  "Peak": "Пик",
+  "Your voice. Your computer.": "Ваш голос. Ваш компьютер.",
+  "Microphone": "Микрофон",
+  "Connection": "Подключение",
+  "Diagnostics": "Диагностика",
+  "Hear my microphone": "Слушать свой микрофон",
+  "Use headphones to avoid feedback. Plays through the default PC output. Off when disconnected or the interface exits.": "Используйте наушники, чтобы избежать обратной связи. Звук идёт на выход ПК по умолчанию. Прослушивание отключается при разрыве соединения или выходе из интерфейса.",
+  "Monitor volume (%)": "Громкость прослушивания (%)",
+  "Monitor unavailable": "Прослушивание недоступно",
+  "Local monitoring active": "Локальное прослушивание включено"
 }

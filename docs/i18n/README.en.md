@@ -2,7 +2,7 @@
 
 [Português (Brasil)](../../README.md) · **English** · [Español](README.es.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-Use your Android phone as a microphone for Linux. Native apps, no account, no cloud. **0.3.0 (Android) / 0.2.0 (Linux) · Android 8+ · PipeWire Linux**, primarily CachyOS/Arch.
+Use your Android phone as a microphone for Linux. Native apps, no account, no cloud. **0.3.0 (Android) / 0.3.0 (Linux) · Android 8+ · PipeWire Linux**, primarily CachyOS/Arch.
 
 ## Install and connect
 
@@ -37,3 +37,5 @@ Local signing: `python3 scripts/sign-android.py`. Back up `~/.local/share/linmic
 [Security policy](../../SECURITY.md) · [Security design](../security.md) · [Validation](../validation.md) · [Contributing](../../CONTRIBUTING.md). Functional tests are not an independent security audit; device/distribution coverage is limited.
 
 **GPL-3.0-or-later**. See [license](../../LICENSE) and [third-party notices](../../THIRD_PARTY_NOTICES.md). Public binary distribution must include corresponding source and notices.
+
+Desktop 0.3.0 adds Microphone, Connection and Diagnostics tabs, receive-gain presets and **Hear my microphone** with independent volume. Use headphones. Local monitoring uses the default PC output, starts disabled and stops on disconnect or GUI exit. PipeWire tools (`pw-loopback`, `pw-dump`, `pw-link`) and WirePlumber (`wpctl`) are required.

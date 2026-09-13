@@ -33,5 +33,14 @@
   "Unstable": "不安定",
   "Jitter": "ジッター",
   "Buffer": "バッファー",
-  "Peak": "ピーク"
+  "Peak": "ピーク",
+  "Your voice. Your computer.": "あなたの声を、パソコンへ。",
+  "Microphone": "マイク",
+  "Connection": "接続",
+  "Diagnostics": "診断",
+  "Hear my microphone": "自分のマイクを聴く",
+  "Use headphones to avoid feedback. Plays through the default PC output. Off when disconnected or the interface exits.": "ハウリングを防ぐためヘッドホンを使用してください。PCの既定の出力から再生します。切断時やUI終了時に停止します。",
+  "Monitor volume (%)": "モニター音量 (%)",
+  "Monitor unavailable": "モニターを利用できません",
+  "Local monitoring active": "ローカルモニター中"
 }

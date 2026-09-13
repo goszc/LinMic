@@ -1081,7 +1081,7 @@ checksum = "3eaf3ede3fee6db1a4c2ee091bf8a8b4dccdc6d17f656fb07896ee72867612f2"
 
 [[package]]
 name = "linmic"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -1092,7 +1092,7 @@ dependencies = [
 
 [[package]]
 name = "linmic-audio"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "linmic-protocol",
@@ -1101,7 +1101,7 @@ dependencies = [
 
 [[package]]
 name = "linmic-common"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "serde",
@@ -1111,12 +1111,13 @@ dependencies = [
 
 [[package]]
 name = "linmic-gui"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "clap",
  "gtk4",
  "ksni",
+ "libc",
  "linmic-common",
  "linmic-ipc",
  "serde_json",
@@ -1125,7 +1126,7 @@ dependencies = [
 
 [[package]]
 name = "linmic-ipc"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "linmic-common",
@@ -1135,7 +1136,7 @@ dependencies = [
 
 [[package]]
 name = "linmic-network"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "hex",
@@ -1152,7 +1153,7 @@ dependencies = [
 
 [[package]]
 name = "linmic-pairing"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "curve25519-dalek",
  "hmac",
@@ -1163,7 +1164,7 @@ dependencies = [
 
 [[package]]
 name = "linmic-pipewire"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "cc",
@@ -1174,7 +1175,7 @@ dependencies = [
 
 [[package]]
 name = "linmic-protocol"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "chacha20poly1305",
@@ -1184,7 +1185,7 @@ dependencies = [
 
 [[package]]
 name = "linmic-tools"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -1199,7 +1200,7 @@ dependencies = [
 
 [[package]]
 name = "linmicd"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "clap",

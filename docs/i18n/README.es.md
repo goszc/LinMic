@@ -2,7 +2,7 @@
 
 [Português (Brasil)](../../README.md) · [English](README.en.md) · **Español** · [Русский](README.ru.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-Usa tu teléfono Android como micrófono para Linux. Aplicaciones nativas, sin cuenta ni nube. **0.3.0 (Android) / 0.2.0 (Linux) · Android 8+ · Linux con PipeWire**, principalmente CachyOS/Arch.
+Usa tu teléfono Android como micrófono para Linux. Aplicaciones nativas, sin cuenta ni nube. **0.3.0 (Android) / 0.3.0 (Linux) · Android 8+ · Linux con PipeWire**, principalmente CachyOS/Arch.
 
 ## Instalar y conectar
 
@@ -37,3 +37,5 @@ Firma local: `python3 scripts/sign-android.py`. Guarda una copia privada de `~/.
 [Seguridad](../../SECURITY.md) · [Diseño de seguridad](../security.md) · [Validación](../validation.md) · [Contribuir](../../CONTRIBUTING.md). Las pruebas funcionales no son una auditoría independiente de seguridad; la cobertura de dispositivos y distribuciones es limitada.
 
 **GPL-3.0-or-later**. Consulta la [licencia](../../LICENSE) y los [avisos de terceros](../../THIRD_PARTY_NOTICES.md). Distribuye el código fuente correspondiente y los avisos junto con los binarios.
+
+El escritorio 0.3.0 añade pestañas de Micrófono, Conexión y Diagnóstico, ajustes de ganancia y **Escuchar mi micrófono** con volumen independiente. Usa auriculares. La escucha utiliza la salida predeterminada del PC, comienza desactivada y se detiene al desconectar o salir de la interfaz. Requiere PipeWire (`pw-loopback`, `pw-dump`, `pw-link`) y WirePlumber (`wpctl`).

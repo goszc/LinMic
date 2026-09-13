@@ -1,6 +1,8 @@
 # Changelog
 
-## Android 0.3.0
+## 0.3.0
+
+- Desktop: redesigned Microphone, Connection and Diagnostics tabs, receive-gain presets and local headphone monitoring with independent volume. Monitoring starts disabled, stops on disconnect/GUI exit and never falls back to a different capture source. Six desktop languages updated.
 
 - Redesigned native interface with Microphone, Connection and Health tabs, persistent connection action, gain presets, readable levels and light/dark themes in six languages.
 - Separate capture, sender and desktop-receipt progress from connection status. Bounded automatic recovery detects stalled audio and probes all-zero capture once until signal returns.

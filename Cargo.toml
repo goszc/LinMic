@@ -4,7 +4,7 @@ members = ["crates/*", "linux/daemon/linmicd", "linux/cli/linmic", "linux/gui/li
 default-members = ["linux/daemon/linmicd", "linux/cli/linmic", "tests/tools"]
 [workspace.package]
 license = "GPL-3.0-or-later"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 [workspace.dependencies]
 serde = { version = "1", features = ["derive"] }

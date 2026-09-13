@@ -33,5 +33,14 @@
   "Unstable": "不稳定",
   "Jitter": "抖动",
   "Buffer": "缓冲",
-  "Peak": "峰值"
+  "Peak": "峰值",
+  "Your voice. Your computer.": "你的声音。你的电脑。",
+  "Microphone": "麦克风",
+  "Connection": "连接",
+  "Diagnostics": "诊断",
+  "Hear my microphone": "监听麦克风",
+  "Use headphones to avoid feedback. Plays through the default PC output. Off when disconnected or the interface exits.": "请使用耳机以避免啸叫。声音通过电脑默认输出播放。断开连接或退出界面时关闭。",
+  "Monitor volume (%)": "监听音量 (%)",
+  "Monitor unavailable": "监听不可用",
+  "Local monitoring active": "本地监听已开启"
 }

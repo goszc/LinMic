@@ -2,7 +2,7 @@
 
 [Português (Brasil)](../../README.md) · [English](README.en.md) · [Español](README.es.md) · [Русский](README.ru.md) · **简体中文** · [日本語](README.ja.md)
 
-将 Android 手机用作 Linux 麦克风。原生应用，无需账号，无需云端。**0.3.0 (Android) / 0.2.0 (Linux) · Android 8 及以上 · 使用 PipeWire 的 Linux**，主要面向 CachyOS/Arch。
+将 Android 手机用作 Linux 麦克风。原生应用，无需账号，无需云端。**0.3.0 (Android) / 0.3.0 (Linux) · Android 8 及以上 · 使用 PipeWire 的 Linux**，主要面向 CachyOS/Arch。
 
 ## 安装与连接
 
@@ -37,3 +37,5 @@ Android 需要 JDK 17、SDK 36、NDK 28.2.13676358、CMake 3.22.1、Python，以
 [安全政策](../../SECURITY.md) · [安全设计](../security.md) · [验证记录](../validation.md) · [参与贡献](../../CONTRIBUTING.md)。功能测试不等同于独立安全审计；设备和发行版覆盖仍有限。
 
 **GPL-3.0-or-later**。参阅[许可证](../../LICENSE)及[第三方声明](../../THIRD_PARTY_NOTICES.md)。分发二进制文件时，须同时提供对应源代码和许可证声明。
+
+桌面版 0.3.0 新增麦克风、连接和诊断选项卡、增益预设，以及带独立音量的**监听麦克风**。请使用耳机。监听使用电脑默认输出，默认关闭，并在断开连接或退出界面时停止。需要 PipeWire（`pw-loopback`、`pw-dump`、`pw-link`）和 WirePlumber（`wpctl`）。
