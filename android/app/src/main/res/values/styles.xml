@@ -1,4 +1,12 @@
 <resources>
-<style name="AppTheme" parent="android:style/Theme.Material.Light.NoActionBar"><item name="android:fontFamily">sans</item><item name="android:colorAccent">#007D68</item><item name="android:windowLightStatusBar">true</item><item name="android:navigationBarColor">#F4F7F6</item></style>
-<style name="AppThemeDark" parent="android:style/Theme.Material.NoActionBar"><item name="android:fontFamily">sans</item><item name="android:colorAccent">#62DCC2</item></style>
+<style name="AppTheme" parent="android:style/Theme.Material.Light.NoActionBar">
+<item name="android:textColorPrimary">#18382C</item><item name="android:textColor">#18382C</item><item name="android:fontFamily">sans</item><item name="android:colorAccent">#007D68</item><item name="android:colorBackground">#F0F5F4</item><item name="android:windowLightStatusBar">true</item><item name="android:navigationBarColor">#F0F5F4</item><item name="surfaceColor">#FFFFFF</item><item name="strokeColor">#DCE7E3</item><item name="secondaryColor">#49655E</item><item name="softAccentColor">#DDF5EC</item>
+</style>
+<style name="AppThemeDark" parent="android:style/Theme.Material.NoActionBar">
+<item name="android:textColorPrimary">#EEF8F3</item><item name="android:textColor">#EEF8F3</item><item name="android:fontFamily">sans</item><item name="android:colorAccent">#74E3BD</item><item name="android:colorBackground">#101B18</item><item name="android:navigationBarColor">#101B18</item><item name="android:windowLightStatusBar">false</item><item name="surfaceColor">#1B2A25</item><item name="strokeColor">#31463D</item><item name="secondaryColor">#A8C4B8</item><item name="softAccentColor">#213F33</item>
+</style>
+<style name="Card"><item name="android:background">@drawable/card</item><item name="android:padding">20dp</item><item name="android:layout_marginBottom">16dp</item></style>
+<style name="Caption"><item name="android:textColor">?attr/secondaryColor</item><item name="android:textSize">14sp</item><item name="android:lineSpacingExtra">3dp</item></style>
+<style name="SectionTitle"><item name="android:textSize">18sp</item><item name="android:textStyle">bold</item><item name="android:layout_marginBottom">12dp</item></style>
+<style name="QuietButton" parent="android:style/Widget.Material.Button.Borderless"><item name="android:textAllCaps">false</item><item name="android:minHeight">48dp</item></style>
 </resources>

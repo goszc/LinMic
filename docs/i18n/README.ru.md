@@ -2,7 +2,7 @@
 
 [Português (Brasil)](../../README.md) · [English](README.en.md) · [Español](README.es.md) · **Русский** · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-Используйте телефон Android как микрофон для Linux. Нативные приложения, без аккаунта и облака. **0.2.0 · Android 8+ · Linux с PipeWire**, основная платформа — CachyOS/Arch.
+Используйте телефон Android как микрофон для Linux. Нативные приложения, без аккаунта и облака. **0.3.0 (Android) / 0.2.0 (Linux) · Android 8+ · Linux с PipeWire**, основная платформа — CachyOS/Arch.
 
 ## Установка и подключение
 

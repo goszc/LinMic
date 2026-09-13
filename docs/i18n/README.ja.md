@@ -2,7 +2,7 @@
 
 [Português (Brasil)](../../README.md) · [English](README.en.md) · [Español](README.es.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md) · **日本語**
 
-Android スマートフォンを Linux のマイクとして使用できます。ネイティブアプリ、アカウント不要、クラウド不要。**0.2.0・Android 8 以降・PipeWire を使用する Linux**。主な対象は CachyOS/Arch です。
+Android スマートフォンを Linux のマイクとして使用できます。ネイティブアプリ、アカウント不要、クラウド不要。**0.3.0 (Android) / 0.2.0 (Linux)・Android 8 以降・PipeWire を使用する Linux**。主な対象は CachyOS/Arch です。
 
 ## インストールと接続
 

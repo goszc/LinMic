@@ -6,7 +6,7 @@
 
 Use o microfone do Android como uma entrada de áudio do Linux: nativo, sem conta, sem nuvem, com Opus e PipeWire.
 
-**Android 0.2.1 / desktop 0.2.0 — Android 8+ e Linux com PipeWire.** O alvo principal é CachyOS/Arch. Desktop GTK4 opcional; o daemon continua funcionando sem janela aberta.
+**Android 0.3.0 / desktop 0.2.0 — Android 8+ e Linux com PipeWire.** O alvo principal é CachyOS/Arch. Desktop GTK4 opcional; o daemon continua funcionando sem janela aberta.
 
 ## Instalação e primeira conexão
 
@@ -99,3 +99,7 @@ Testes longos são opcionais e não fazem parte da instalação: `python3 tests/
 ## Licença e contribuição
 
 GPL-3.0-or-later. Veja [LICENSE](LICENSE), [contribuição](CONTRIBUTING.md) e [avisos de terceiros](THIRD_PARTY_NOTICES.md). Código-fonte e pacotes assinados são publicados neste repositório. Os scripts locais não publicam automaticamente.
+
+### Android 0.3.0
+
+A interface separa Microfone, Conexão e Diagnóstico. Captura compatível vem ativada; pode alterar o som por usar o processamento de voz do Android. Travamentos de captura/transmissão têm recuperação automática limitada. Silêncio digital recebe uma tentativa de recuperação até surgir sinal; silêncio imposto pelo Android é informado e respeitado. Em Diagnóstico, veja ajustes de bateria e histórico técnico copiável sem áudio ou credenciais. O botão Recuperar áudio dispensa desconectar manualmente.

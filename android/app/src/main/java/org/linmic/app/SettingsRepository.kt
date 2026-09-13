@@ -27,6 +27,15 @@ class SettingsRepository(context: Context) {
     var inputDevice: Int
         get() = preferences.getInt("device", 0)
         set(v) { preferences.edit().putInt("device", v).apply() }
+    var compatible: Boolean
+        get() = preferences.getBoolean("compatible", true)
+        set(v) { preferences.edit().putBoolean("compatible", v).apply() }
+    var sessionRequested: Boolean
+        get() = preferences.getBoolean("sessionRequested", false)
+        set(v) { preferences.edit().putBoolean("sessionRequested", v).commit() }
+    var sessionMuted: Boolean
+        get() = preferences.getBoolean("sessionMuted", false)
+        set(v) { preferences.edit().putBoolean("sessionMuted", v).apply() }
     var reconnect: Boolean
         get() = preferences.getBoolean("reconnect", true)
         set(v) { preferences.edit().putBoolean("reconnect", v).apply() }

@@ -14,7 +14,8 @@ class WaveformView(context: Context, attrs: AttributeSet?) : View(context, attrs
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val center = height/2f
-        for (i in 0 until 128) { val x=(i+0.5f)*width/128f; val amplitude=data.getOrElse(i+16){0f}.coerceIn(0f,1f)*height*0.48f; canvas.drawLine(x,center-amplitude-1,x,center+amplitude+1,paint) }
+        paint.color=if(data.getOrElse(1){0f}>=0.89f) Color.rgb(220,100,80) else Color.rgb(45,175,136)
+        for (i in 0 until 128) { val x=(i+0.5f)*width/128f; val amplitude=kotlin.math.sqrt(data.getOrElse(i+16){0f}.coerceIn(0f,1f))*height*0.48f; canvas.drawLine(x,center-amplitude-1,x,center+amplitude+1,paint) }
         val peak=data.getOrElse(1){0f}
         paint.color=if(peak>=0.89f) Color.rgb(203,69,69) else Color.rgb(0,155,126)
     }

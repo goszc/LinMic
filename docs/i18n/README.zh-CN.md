@@ -2,7 +2,7 @@
 
 [Português (Brasil)](../../README.md) · [English](README.en.md) · [Español](README.es.md) · [Русский](README.ru.md) · **简体中文** · [日本語](README.ja.md)
 
-将 Android 手机用作 Linux 麦克风。原生应用，无需账号，无需云端。**0.2.0 · Android 8 及以上 · 使用 PipeWire 的 Linux**，主要面向 CachyOS/Arch。
+将 Android 手机用作 Linux 麦克风。原生应用，无需账号，无需云端。**0.3.0 (Android) / 0.2.0 (Linux) · Android 8 及以上 · 使用 PipeWire 的 Linux**，主要面向 CachyOS/Arch。
 
 ## 安装与连接
 

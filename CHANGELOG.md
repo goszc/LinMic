@@ -1,5 +1,15 @@
 # Changelog
 
+## Android 0.3.0
+
+- Redesigned native interface with Microphone, Connection and Health tabs, persistent connection action, gain presets, readable levels and light/dark themes in six languages.
+- Separate capture, sender and desktop-receipt progress from connection status. Bounded automatic recovery detects stalled audio and probes all-zero capture once until signal returns.
+- Detect Android framework microphone silencing without bypassing privacy controls.
+- Default compatibility capture uses shared VoiceCommunication; fast capture remains selectable.
+- Service-owned native sessions, immediate privacy mute, sticky authenticated-session restart and safe cleanup across service replacement.
+- Private bounded diagnostic history, explicit report copy, battery settings shortcut and one-tap audio repair.
+- Compatible with desktop 0.2.0. Physical Samsung screen-off behavior still requires validation on the affected handset.
+
 ## Android 0.2.1
 
 - Keep CPU and supported background Wi-Fi locks owned by the microphone service across screen-off and reconnect intervals. Android 14+ Wi-Fi lock restrictions still apply.

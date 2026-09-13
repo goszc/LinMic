@@ -1,26 +1,84 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/root" android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true">
-<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
-        <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="@string/app_name" android:textSize="32sp" android:textStyle="bold"/>
-        <Button android:id="@+id/settings" android:layout_width="wrap_content" android:layout_height="48dp" android:text="@string/settings"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/root" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:background="?android:colorBackground">
+ <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="20dp" android:paddingTop="12dp">
+  <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
+   <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/app_name" android:textSize="30sp" android:fontFamily="sans-serif-medium"/>
+   <TextView style="@style/Caption" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tagline"/>
+  </LinearLayout>
+  <Button style="@style/QuietButton" android:id="@+id/settings" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/settings"/>
+ </LinearLayout>
+ <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingHorizontal="12dp">
+  <Button style="@style/QuietButton" android:id="@+id/tab_mic" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="@string/tab_mic"/>
+  <Button style="@style/QuietButton" android:id="@+id/tab_connection" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="@string/tab_connection"/>
+  <Button style="@style/QuietButton" android:id="@+id/tab_health" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="@string/tab_health"/>
+ </LinearLayout>
+ <ScrollView android:id="@+id/scroll" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:fillViewport="true">
+  <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="20dp">
+   <LinearLayout android:id="@+id/panel_mic" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+    <LinearLayout style="@style/Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+     <TextView android:id="@+id/status" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/idle" android:textSize="22sp" android:textStyle="bold" android:accessibilityLiveRegion="polite"/>
+     <TextView style="@style/Caption" android:id="@+id/session_route" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"/>
+     <org.linmic.app.WaveformView android:id="@+id/waveform" android:layout_width="match_parent" android:layout_height="112dp" android:layout_marginTop="12dp" android:contentDescription="@string/waveform"/>
+     <TextView android:id="@+id/level" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="28sp" android:fontFamily="sans-serif-light" android:gravity="center"/>
+     <TextView style="@style/Caption" android:id="@+id/level_hint" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:layout_marginBottom="12dp"/>
+     <Button android:id="@+id/mute" android:background="@drawable/primary_button" android:textColor="#FFFFFF" android:layout_width="match_parent" android:layout_height="72dp" android:text="@string/mute" android:textSize="19sp" android:textAllCaps="false"/>
+     <TextView style="@style/Caption" android:id="@+id/quick_stats" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:layout_marginTop="12dp"/>
     </LinearLayout>
-    <TextView android:id="@+id/status" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="@string/idle" android:textSize="20sp" android:accessibilityLiveRegion="polite"/>
-    <org.linmic.app.WaveformView android:id="@+id/waveform" android:layout_width="match_parent" android:layout_height="112dp" android:layout_marginTop="12dp" android:contentDescription="@string/waveform"/>
-    <Button android:id="@+id/mute" android:layout_width="match_parent" android:layout_height="64dp" android:text="@string/mute" android:textSize="18sp"/>
-    <TextView android:id="@+id/stats" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:fontFamily="monospace" android:textSize="14sp" android:lineSpacingExtra="4dp"/>
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/latency_help" android:textSize="12sp"/>
-    <TextView android:id="@+id/diagnostics" android:layout_width="match_parent" android:layout_height="wrap_content" android:fontFamily="monospace" android:textSize="12sp" android:visibility="gone"/>
-    <TextView android:id="@+id/gain_label" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp"/>
-    <SeekBar android:id="@+id/gain" android:layout_width="match_parent" android:layout_height="48dp" android:max="84" android:progress="60" android:contentDescription="@string/gain"/>
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/profile" android:labelFor="@id/profile"/>
-    <Spinner android:id="@+id/profile" android:layout_width="match_parent" android:layout_height="48dp"/>
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/mic" android:labelFor="@id/microphone"/>
-    <Spinner android:id="@+id/microphone" android:layout_width="match_parent" android:layout_height="48dp"/>
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/discovery" android:labelFor="@id/computers"/>
-    <Spinner android:id="@+id/computers" android:layout_width="match_parent" android:layout_height="48dp"/>
-    <EditText android:id="@+id/host" android:layout_width="match_parent" android:layout_height="56dp" android:hint="@string/host" android:inputType="textUri" android:singleLine="true" android:importantForAutofill="no"/>
-    <EditText android:id="@+id/port" android:layout_width="match_parent" android:layout_height="56dp" android:hint="@string/port" android:inputType="number" android:singleLine="true" android:importantForAutofill="no"/>
-    <Button android:id="@+id/connect" android:layout_width="match_parent" android:layout_height="56dp" android:text="@string/connect" android:layout_marginTop="12dp"/>
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="@string/intro"/>
+    <LinearLayout android:id="@+id/recovery_card" style="@style/Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone">
+     <TextView style="@style/SectionTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/recovery_title"/>
+     <TextView style="@style/Caption" android:id="@+id/recovery_help" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+     <Button style="@style/QuietButton" android:id="@+id/repair" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/repair"/>
+    </LinearLayout>
+    <LinearLayout style="@style/Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+     <TextView style="@style/SectionTitle" android:id="@+id/gain_label" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+     <SeekBar android:id="@+id/gain" android:layout_width="match_parent" android:layout_height="48dp" android:max="84" android:progress="60" android:contentDescription="@string/gain_control"/>
+     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+      <Button style="@style/QuietButton" android:id="@+id/gain_reset" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="@string/gain_reset"/>
+      <Button style="@style/QuietButton" android:id="@+id/gain_six" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="@string/gain_six"/>
+      <Button style="@style/QuietButton" android:id="@+id/gain_twelve" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="@string/gain_twelve"/>
+     </LinearLayout>
+     <TextView style="@style/Caption" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/gain_help"/>
+    </LinearLayout>
+   </LinearLayout>
+   <LinearLayout android:id="@+id/panel_connection" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone">
+    <LinearLayout style="@style/Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+     <TextView style="@style/SectionTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/discovery" android:labelFor="@id/computers"/>
+     <TextView style="@style/Caption" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/connection_help"/>
+     <Spinner android:id="@+id/computers" android:layout_width="match_parent" android:layout_height="56dp"/>
+     <Button style="@style/QuietButton" android:id="@+id/manual_toggle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/manual"/>
+     <LinearLayout android:id="@+id/manual_fields" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone">
+      <EditText android:id="@+id/host" android:layout_width="match_parent" android:layout_height="56dp" android:hint="@string/host" android:inputType="textUri" android:singleLine="true" android:importantForAutofill="no"/>
+      <EditText android:id="@+id/port" android:layout_width="match_parent" android:layout_height="56dp" android:hint="@string/port" android:inputType="number" android:singleLine="true" android:importantForAutofill="no"/>
+     </LinearLayout>
+    </LinearLayout>
+    <LinearLayout style="@style/Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+     <TextView style="@style/SectionTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/mic" android:labelFor="@id/microphone"/>
+     <Spinner android:id="@+id/microphone" android:layout_width="match_parent" android:layout_height="56dp"/>
+     <TextView style="@style/Caption" android:id="@+id/current_input" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+     <Switch android:id="@+id/compatible" android:layout_width="match_parent" android:layout_height="64dp" android:text="@string/compatible_capture"/>
+     <TextView style="@style/Caption" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/compatible_help"/>
+     <TextView style="@style/SectionTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:text="@string/profile" android:labelFor="@id/profile"/>
+     <Spinner android:id="@+id/profile" android:layout_width="match_parent" android:layout_height="56dp"/>
+     <TextView style="@style/Caption" android:id="@+id/profile_help" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+     <TextView style="@style/Caption" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="@string/restart_settings"/>
+    </LinearLayout>
+   </LinearLayout>
+   <LinearLayout android:id="@+id/panel_health" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone">
+    <LinearLayout style="@style/Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+     <TextView style="@style/SectionTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/background_title"/>
+     <TextView style="@style/Caption" android:id="@+id/background_status" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+     <Button style="@style/QuietButton" android:id="@+id/battery_settings" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/battery_settings"/>
+    </LinearLayout>
+    <LinearLayout style="@style/Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+     <TextView style="@style/SectionTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/diagnostics"/>
+     <TextView android:id="@+id/stats" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="14sp" android:lineSpacingExtra="5dp"/>
+     <TextView style="@style/Caption" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="@string/latency_help"/>
+     <TextView style="@style/Caption" android:id="@+id/diagnostics" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp"/>
+     <Button style="@style/QuietButton" android:id="@+id/show_report" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/show_report"/>
+    </LinearLayout>
+   </LinearLayout>
+  </LinearLayout>
+ </ScrollView>
+ <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="20dp" android:paddingBottom="8dp">
+  <Button android:id="@+id/connect" android:background="@drawable/primary_button" android:textColor="#FFFFFF" android:layout_width="match_parent" android:layout_height="56dp" android:text="@string/connect" android:textAllCaps="false" android:textSize="17sp"/>
+ </LinearLayout>
 </LinearLayout>
-</ScrollView>

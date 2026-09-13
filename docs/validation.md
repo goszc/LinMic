@@ -11,3 +11,7 @@ Global shortcuts require an implemented desktop GlobalShortcuts portal. Linux ar
 ## Android 0.2.1 regression checks
 
 Release lint and unit tests cover transient TLS/EOF retry, nested certificate rejection, disabled reconnection and newly saved pairing identity selection. The release APK is signed with the same identity as 0.2.0. No handset was connected over ADB during this fix: screen-off capture and OEM battery behavior must be checked on the affected phone. Legacy HIGH_PERF Wi-Fi protection is held throughout streaming/reconnecting on Android 8–13; Android 14+ replaces that mode with screen-on-only LOW_LATENCY. No Wi-Fi lock bypasses Doze or a user/OEM restriction.
+
+## Android 0.3.0
+
+20 Android unit tests and release lint passed. New tests distinguish quiet rooms and deliberate/system mute from frozen capture, stalled sending, stopped PC receipt and all-zero driver data; recovery limits persist across reconnects. On an Android 15 emulator paired through real SPAKE2/TLS with an isolated Linux daemon, screen-off transmission continued (795 packets over 8 seconds), the Android microphone privacy switch appeared as system silencing, and suspending/resuming audioserver triggered CAPTURE_STALLED → automatic reopen → STREAMING without user action. The emulator does not reproduce Samsung firmware or prove physical microphone quality. The affected handset still needs a screen-off check; a private diagnostic history is available if the fault recurs.
