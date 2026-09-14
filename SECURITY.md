@@ -1,6 +1,6 @@
 # Security policy
 
-The maintained release series is 0.2.x. Do not distribute the original 0.1.0 debug APK as a production release.
+The maintained release series is 0.3.x. Do not distribute the original 0.1.0 debug APK as a production release.
 
 Report vulnerabilities through **GitHub private vulnerability reporting** once the repository is published and its maintainer has enabled that feature. If it is unavailable, ask the maintainer for a private contact without disclosing exploit details or secrets in a public issue. Never attach audio, device tokens, private certificates, signing keys or pairing codes.
 
